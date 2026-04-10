@@ -4,7 +4,10 @@ const path = require("path");
 const htmlPath = path.join(__dirname, "../src/index.html");
 const cssPath = path.join(__dirname, "../src/styles/main.css");
 const jsFiles = ["clock.js", "game.js", "ui.js"];
-const outPath = path.join(__dirname, "../dist/index.html");
+const outDir = path.join(__dirname, "../dist");
+const outPath = path.join(outDir, "index.html");
+
+if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
 
 let html = fs.readFileSync(htmlPath, "utf8");
 const css = fs.readFileSync(cssPath, "utf8");

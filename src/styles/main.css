@@ -653,12 +653,6 @@ body {
     transform: scale(1);
     opacity: 1;
   }
-  padding: 0.5rem 1rem;
-  border-radius: 0.3rem;
-  color: var(--text-primary);
-  border: none;
-  cursor: pointer;
-  transition: all var(--transition-quick);
 }
 
 .fullscreen-button:hover {
@@ -1098,7 +1092,7 @@ button:disabled {
     font-size: calc(var(--player-name-size) * 0.8);
   }
 
-  ca .cube-value {
+  .cube-value {
     font-size: 2.5rem;
   }
 

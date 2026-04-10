@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Backgammon Clock</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="game-state-banner">
+        <div class="banner-content">
+          <div class="state-indicator"></div>
+          <div class="state-message">Ready to Start</div>
+        </div>
+        <button class="fullscreen-button">Fullscreen</button>
+      </div>
+
+      <div class="main-content">
+        <div class="player-section player-one" id="player-one">
+          <div class="player-info">
+            <h2 class="player-name">Player 1</h2>
+            <div class="player-score">0</div>
+          </div>
+          <div class="clock-container">
+            <div class="clock">00:00.000</div>
+            <div class="progress-bars">
+              <div class="delay-container">
+                <div class="delay-time">12.0</div>
+                <div class="delay-bar">
+                  <div class="delay-progress"></div>
+                </div>
+              </div>
+              <div class="main-time-container">
+                <div class="main-time-bar">
+                  <div class="main-time-progress"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cube-ownership">
+            <div class="cube-indicator"></div>
+          </div>
+        </div>
+
+        <div class="center-controls">
+          <div class="cube-section">
+            <button class="double-button" disabled>Double<span>1</span></button>
+          </div>
+          <div class="game-controls">
+            <button class="start-button">Start Game</button>
+            <button class="pause-button" disabled>Pause</button>
+            <button class="end-match-button" disabled>End Match</button>
+            <button class="reset-button" disabled>Reset</button>
+            <button class="settings-button">
+              <span class="settings-icon">⚙️</span>
+              <span class="settings-text">Settings</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="player-section player-two" id="player-two">
+          <div class="player-info">
+            <h2 class="player-name">Player 2</h2>
+            <div class="player-score">0</div>
+          </div>
+          <div class="clock-container">
+            <div class="clock">00:00.000</div>
+            <div class="progress-bars">
+              <div class="delay-container">
+                <div class="delay-time">12.0</div>
+                <div class="delay-bar">
+                  <div class="delay-progress"></div>
+                </div>
+              </div>
+              <div class="main-time-container">
+                <div class="main-time-bar">
+                  <div class="main-time-progress"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cube-ownership">
+            <div class="cube-indicator"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Modal -->
+      <div class="settings-modal" id="settings-modal">
+        <div class="settings-content">
+          <h2>Game Settings</h2>
+          <div class="settings-form">
+            <div class="setting-group">
+              <label for="player1-name">Player 1 Name:</label>
+              <input type="text" id="player1-name" value="Player 1" />
+            </div>
+            <div class="setting-group">
+              <label for="player2-name">Player 2 Name:</label>
+              <input type="text" id="player2-name" value="Player 2" />
+            </div>
+            <div class="setting-group time-input">
+              <label>Initial Time:</label>
+              <div class="time-inputs">
+                <div class="input-group">
+                  <input
+                    type="number"
+                    id="initial-minutes"
+                    value="5"
+                    min="0"
+                    max="999"
+                  />
+                  <span>min</span>
+                </div>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    id="initial-seconds"
+                    value="0"
+                    min="0"
+                    max="59"
+                  />
+                  <span>sec</span>
+                </div>
+              </div>
+            </div>
+            <div class="setting-group">
+              <label for="delay-time">Delay (seconds):</label>
+              <input type="number" id="delay-time" value="0" min="0" max="30" />
+            </div>
+            <div class="setting-group">
+              <label for="max-cube">Max Cube Value:</label>
+              <input type="number" id="max-cube" value="64" min="2" step="2" />
+            </div>
+            <div class="setting-group"></div>
+            <div class="settings-buttons">
+              <button class="cancel-settings">Cancel</button>
+              <button class="save-settings">Save</button>
+            </div>
+            <div class="setting-group version-info">
+              <div class="version-details">
+                <div>Version: <span class="app-version">-</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Double Offer Overlay -->
+      <div class="double-offer-overlay" id="double-offer-overlay">
+        <div class="double-offer-content">
+          <h2>Double Offered</h2>
+          <p class="double-offer-message"></p>
+          <div class="double-offer-value">
+            <span class="current-value"></span> →
+            <span class="new-value"></span>
+          </div>
+          <div class="double-offer-buttons">
+            <button class="take-button">Take</button>
+            <button class="pass-button">Pass</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- End Match Overlay -->
+      <div class="end-match-overlay" id="end-match-overlay">
+        <div class="end-match-content">
+          <h2>End Match</h2>
+          <div class="end-match-form">
+            <div class="winner-select">
+              <label>Winner:</label>
+              <div class="button-group">
+                <button
+                  type="button"
+                  class="winner-button selected"
+                  data-value="player1"
+                >
+                  Player 1
+                </button>
+                <button
+                  type="button"
+                  class="winner-button"
+                  data-value="player2"
+                >
+                  Player 2
+                </button>
+              </div>
+            </div>
+            <div class="points-select">
+              <label>Points:</label>
+              <div class="button-group">
+                <button
+                  type="button"
+                  class="points-button selected"
+                  data-value="1"
+                >
+                  Regular<br />(1)
+                </button>
+                <button type="button" class="points-button" data-value="2">
+                  Mars<br />(2)
+                </button>
+                <button type="button" class="points-button" data-value="3">
+                  Turkish Mars<br />(3)
+                </button>
+              </div>
+            </div>
+            <div class="cube-value">
+              <span>Current Cube: </span>
+              <span class="current-cube-value">1</span>
+            </div>
+            <div class="total-points">
+              <span>Total Points: </span>
+              <span class="points-calculation">1</span>
+            </div>
+          </div>
+          <div class="end-match-buttons">
+            <button class="cancel-end-match">Cancel</button>
+            <button class="confirm-end-match">Confirm</button>
+          </div>
+        </div>
+      </div>
+      <!-- Time Up Overlay -->
+      <div class="game-dialog-overlay" id="time-up-overlay">
+        <div class="game-dialog-content">
+          <h2>Time Up!</h2>
+          <p class="time-up-message"></p>
+          <div class="game-dialog-buttons">
+            <button class="ok-button">OK</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Result Overlay -->
+      <div class="game-dialog-overlay" id="game-result-overlay">
+        <div class="game-dialog-content">
+          <h2>Game Result</h2>
+          <p class="game-result-message"></p>
+          <div class="game-dialog-buttons">
+            <button class="ok-button">OK</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Dialog Overlay -->
+      <div class="game-dialog-overlay" id="confirm-dialog-overlay">
+        <div class="game-dialog-content">
+          <h2>Confirm Action</h2>
+          <p class="confirm-message"></p>
+          <div class="game-dialog-buttons">
+            <button class="cancel-button">Cancel</button>
+            <button class="confirm-button">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

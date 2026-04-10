@@ -1,0 +1,13 @@
+{
+  "name": "bgclock",
+  "version": "2.0.0",
+  "scripts": {
+    "build": "node build/inline.js",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "prettier": "^3.8.2"
+  }
+}

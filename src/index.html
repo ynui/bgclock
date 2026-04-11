@@ -94,55 +94,42 @@
           <h2>Game Settings</h2>
           <div class="settings-form">
             <div class="setting-group">
-              <label for="player1-name">Player 1 Name:</label>
-              <input type="text" id="player1-name" value="Player 1" />
-            </div>
-            <div class="setting-group">
-              <label for="player2-name">Player 2 Name:</label>
-              <input type="text" id="player2-name" value="Player 2" />
-            </div>
-            <div class="setting-group time-input">
-              <label>Initial Time:</label>
-              <div class="time-inputs">
-                <div class="input-group">
-                  <input
-                    type="number"
-                    id="initial-minutes"
-                    value="5"
-                    min="0"
-                    max="999"
-                  />
-                  <span>min</span>
+              <label>Player Names:</label>
+              <div class="player-names-row">
+                <div class="player-name-input">
+                  <input type="text" id="player1-name" value="Player 1" />
                 </div>
-                <div class="input-group">
-                  <input
-                    type="number"
-                    id="initial-seconds"
-                    value="0"
-                    min="0"
-                    max="59"
-                  />
-                  <span>sec</span>
+                <div class="player-name-input">
+                  <input type="text" id="player2-name" value="Player 2" />
                 </div>
               </div>
             </div>
             <div class="setting-group">
-              <label for="delay-time">Delay (seconds):</label>
-              <input type="number" id="delay-time" value="0" min="0" max="30" />
+              <label>Initial Time: <span class="time-value-display">5:00</span></label>
+              <input type="range" id="initial-time-slider" min="30" max="900" step="30" value="300" />
+              <div class="slider-range-labels">
+                <span>0:30</span>
+                <span>15:00</span>
+              </div>
             </div>
             <div class="setting-group">
-              <label for="max-cube">Max Cube Value:</label>
-              <input type="number" id="max-cube" value="64" min="2" step="2" />
+              <label>Delay: <span class="delay-value-display">0</span>s</label>
+              <input type="range" id="delay-slider" min="0" max="20" step="1" value="0" />
+              <div class="slider-range-labels">
+                <span>0</span>
+                <span>20</span>
+              </div>
             </div>
-            <div class="setting-group"></div>
+            <div class="setting-group">
+              <label>Max Cube Value: <span class="cube-value-display">64</span></label>
+              <input type="range" id="max-cube-slider" min="0" max="5" step="1" value="5" />
+              <div class="slider-range-labels cube-labels">
+                <span>2</span><span>4</span><span>8</span><span>16</span><span>32</span><span>64</span>
+              </div>
+            </div>
             <div class="settings-buttons">
               <button class="cancel-settings">Cancel</button>
               <button class="save-settings">Save</button>
-            </div>
-            <div class="setting-group version-info">
-              <div class="version-details">
-                <div>Version: <span class="app-version">-</span></div>
-              </div>
             </div>
           </div>
         </div>

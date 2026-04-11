@@ -733,7 +733,7 @@ button:disabled {
   letter-spacing: 0.05em;
 }
 
-.setting-group input {
+.setting-group input[type="text"] {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 2px solid var(--secondary-bg);
@@ -748,10 +748,139 @@ button:disabled {
   border-color: var(--text-secondary);
 }
 
-.setting-group input:focus {
+.setting-group input[type="text"]:focus {
   outline: none;
   border-color: var(--status-double);
   box-shadow: 0 0 0 3px rgba(155, 93, 229, 0.2);
+}
+
+/* Player Names Row */
+.player-names-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.player-name-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.player-name-input label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0;
+}
+
+.player-name-input input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--secondary-bg);
+  border-radius: 0.5rem;
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all var(--transition-quick);
+}
+
+.player-name-input input:focus {
+  outline: none;
+  border-color: var(--status-double);
+  box-shadow: 0 0 0 3px rgba(155, 93, 229, 0.2);
+}
+
+/* Slider Controls */
+.setting-group input[type="range"] {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--primary-bg);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 1.5rem 0 1rem 0;
+}
+
+.setting-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--status-double);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-quick);
+  margin-top: -6px;
+}
+
+.setting-group input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.setting-group input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--status-double);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: none;
+  transition: transform var(--transition-quick);
+  margin-top: -6px;
+}
+
+.setting-group input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+.setting-group input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--status-double) 0%,
+    var(--primary-bg) 0%
+  );
+}
+
+.slider-range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.slider-range-labels.cube-labels {
+  position: relative;
+  padding: 0 10px;
+}
+
+.slider-range-labels.cube-labels span {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.slider-range-labels.cube-labels span:nth-child(1) { left: 0%; }
+.slider-range-labels.cube-labels span:nth-child(2) { left: 20%; }
+.slider-range-labels.cube-labels span:nth-child(3) { left: 40%; }
+.slider-range-labels.cube-labels span:nth-child(4) { left: 60%; }
+.slider-range-labels.cube-labels span:nth-child(5) { left: 80%; }
+.slider-range-labels.cube-labels span:nth-child(6) { left: 100%; }
+
+.time-value-display,
+.delay-value-display,
+.cube-value-display {
+  color: var(--text-primary);
+  font-weight: bold;
+  font-family: "SF Mono", Monaco, monospace;
 }
 
 .time-input {
@@ -885,30 +1014,8 @@ button:disabled {
     font-size: 0.95rem;
   }
 
-  .time-inputs {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .time-input {
-    padding: 1rem;
-    width: 100%;
-  }
-
-  .time-input .input-group {
-    min-width: 0;
-    width: 100%;
-    padding: 0.5rem;
-  }
-
-  .time-input .input-group input {
-    font-size: 1.25rem;
-    padding: 0.6rem;
-  }
-
-  .time-input .input-group span {
-    font-size: 0.75rem;
-    right: 0.75rem;
+  .player-names-row {
+    grid-template-columns: 1fr;
   }
 
   .settings-buttons {
@@ -1457,30 +1564,3 @@ button:disabled {
   transform: translateY(-2px);
 }
 
-/* Version Info */
-.version-info {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.version-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  text-align: center;
-}
-
-.version-details div {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
-}
-
-.version-details .app-version,
-.version-details .build-time {
-  color: var(--text-primary);
-}

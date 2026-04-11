@@ -89,6 +89,17 @@ class GameUI {
       this.hideSettings(),
     );
 
+    // Slider event listeners for real-time display updates
+    document.getElementById("initial-time-slider").addEventListener("input", () =>
+      this.updateSliderDisplays(),
+    );
+    document.getElementById("delay-slider").addEventListener("input", () =>
+      this.updateSliderDisplays(),
+    );
+    document.getElementById("max-cube-slider").addEventListener("input", () =>
+      this.updateSliderDisplays(),
+    );
+
     this.doubleButton.addEventListener("click", () => {
       if (
         this.engine.isGameRunning() &&
@@ -184,18 +195,41 @@ class GameUI {
   showSettings() {
     const p1 = this.engine.getPlayerOne();
     const totalSeconds = Math.floor(p1.clock.getInitialTimeMs() / 1000);
+    const delaySeconds = Math.floor(p1.clock.getDelayMs() / 1000);
+    const maxCube = this.engine.getDoublingCube().getMaxValue();
+
     document.getElementById("player1-name").value = p1.name;
     document.getElementById("player2-name").value =
       this.engine.getPlayerTwo().name;
-    document.getElementById("initial-minutes").value = Math.floor(
-      totalSeconds / 60,
-    );
-    document.getElementById("initial-seconds").value = totalSeconds % 60;
-    document.getElementById("delay-time").value = p1.clock.getDelayMs() / 1000;
-    document.getElementById("max-cube").value = this.engine
-      .getDoublingCube()
-      .getMaxValue();
+    document.getElementById("initial-time-slider").value = totalSeconds;
+    document.getElementById("delay-slider").value = delaySeconds;
+
+    // Calculate cube slider value (log2 of cube value)
+    const cubeSliderValue = Math.log2(maxCube);
+    document.getElementById("max-cube-slider").value = cubeSliderValue;
+
+    this.updateSliderDisplays();
     this.settingsModal.classList.add("active");
+  }
+
+  updateSliderDisplays() {
+    // Update time slider display
+    const timeSlider = document.getElementById("initial-time-slider");
+    const timeDisplay = document.querySelector(".time-value-display");
+    const totalSeconds = parseInt(timeSlider.value);
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    timeDisplay.textContent = `${mins}:${secs.toString().padStart(2, "0")}`;
+
+    // Update delay slider display
+    const delaySlider = document.getElementById("delay-slider");
+    const delayDisplay = document.querySelector(".delay-value-display");
+    delayDisplay.textContent = delaySlider.value;
+
+    // Update cube slider display (slider 0-5 maps to 2,4,8,16,32,64)
+    const cubeSlider = document.getElementById("max-cube-slider");
+    const cubeDisplay = document.querySelector(".cube-value-display");
+    cubeDisplay.textContent = Math.pow(2, parseInt(cubeSlider.value) + 1);
   }
 
   hideSettings() {
@@ -209,32 +243,22 @@ class GameUI {
     const p2Name =
       document.getElementById("player2-name").value ||
       CONFIG.DEFAULT_PLAYER_NAME_2;
-    const minutes = Math.max(
-      0,
-      Math.min(
-        999,
-        parseInt(document.getElementById("initial-minutes").value) || 0,
-      ),
-    );
-    const seconds = Math.max(
-      0,
-      Math.min(
-        59,
-        parseInt(document.getElementById("initial-seconds").value) || 0,
-      ),
-    );
-    const delay = Math.max(
-      0,
-      Math.min(30, parseInt(document.getElementById("delay-time").value) || 0),
-    );
-    const maxCube = Math.max(
-      2,
-      Math.min(64, parseInt(document.getElementById("max-cube").value) || 64),
-    );
+
+    // Get time from slider (in seconds)
+    const totalSeconds = parseInt(document.getElementById("initial-time-slider").value);
+    const minutes = Math.floor(totalSeconds / 60);
+
+    // Get delay from slider
+    const delay = parseInt(document.getElementById("delay-slider").value);
+
+    // Get cube value from slider (2^(value+1))
+    const cubeSliderValue = parseInt(document.getElementById("max-cube-slider").value);
+    const maxCube = Math.pow(2, cubeSliderValue + 1);
+
     this.engine.updateSettings(
       p1Name,
       p2Name,
-      minutes + seconds / 60,
+      minutes,
       delay,
       maxCube,
     );
